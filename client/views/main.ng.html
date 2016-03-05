@@ -1,0 +1,28 @@
+<div>
+  <br />
+  <a ui-sref="messages">Messages</a>
+  <br />
+  <br />
+  <b>Sample chat app</b>
+  <br />
+  <br />
+  <input name="name" id="name" placeholder="Name" ng-model="message.name" />
+  <input name="message" id="message" placeholder="Message" ng-model="message.message" />
+  <button name="button" ng-click="sendMessage()">Send</button>
+  <button name="button" ng-click="clear()">{{message._id ? 'Cancel' : 'Clear'}}</button>
+  <br />
+  <br />
+  <b>Messages</b> <button ng-click="removeAllMessages()" ng-if="messages[1]">Delete All</button>
+  <br />
+  <br />
+  <div ng-repeat="message in messages">
+    Name : {{message.name}}
+    <br />
+    Message : {{message.message}}
+    <br />
+    <button ng-click="editMessage(message)">Edit</button>
+    <button ng-click="removeMessage(message)">Delete</button>
+    <br />
+    <br />
+  </div>
+</div>
