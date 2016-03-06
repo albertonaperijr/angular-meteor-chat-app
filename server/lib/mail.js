@@ -12,6 +12,4 @@ SMTP = {
   port: 465
 }
 
-console.log('')
-
 process.env.MAIL_URL = 'smtp://' + encodeURIComponent(SMTP.username) + ':' + encodeURIComponent(SMTP.password) + '@' + encodeURIComponent(SMTP.server) + ':' + SMTP.port;
