@@ -4,9 +4,9 @@ angular
 .module('angularMeteor')
 .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['$scope', '$log', '$timeout'];
+MainCtrl.$inject = ['$scope', '$log', '$timeout', 'codeManagerFactory', 'messageFactory'];
 
-function MainCtrl($scope, $log, $timeout) {
+function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
 
   var controllerName = 'MainCtrl';
   $log.log(controllerName, Messages);
@@ -24,30 +24,74 @@ function MainCtrl($scope, $log, $timeout) {
 
   $scope.sendMessage = function() {
     if ($scope.message) {
-      if ($scope.message._id) {
-        $log.log(controllerName, 'sendMessage update', $scope.message);
-        Messages.update($scope.message._id, $scope.message, function(error, success) {
-          $log.log(controllerName, 'success', success, 'error', error);
-          if (success) {
+      if (!$scope.message._id) {
+        $log.log(controllerName, 'sendMessage create', $scope.message);
+        messageFactory.createMessage($scope.message)
+        .then(function(Response) {
+          $log.log(controllerName, 'Response', Response);
+          if (codeManagerFactory.isSuccess(Response.returnCode)) {
             $scope.clear();
           } else {
             // error
           }
+        }, function(error) {
+          // $log.log(controllerName, 'error', error);
         });
       } else {
-        $log.log(controllerName, 'sendMessage insert', $scope.message);
-        Messages.insert($scope.message, function(error, success) {
-          $log.log(controllerName, 'success', success, 'error', error);
-          if (success) {
+        $log.log(controllerName, 'sendMessage update', $scope.message);
+        messageFactory.updateMessage($scope.message)
+        .then(function(Response) {
+          $log.log(controllerName, 'Response', Response);
+          if (codeManagerFactory.isSuccess(Response.returnCode)) {
             $scope.clear();
           } else {
             // error
           }
+        }, function(error) {
+          // $log.log(controllerName, 'error', error);
         });
       }
     } else {
       $log.log(controllerName, 'Null message');
     }
+  };
+
+  $scope.removeMessage = function(message) {
+    $log.log(controllerName, 'removeMessage', message);
+    if (message) {
+      if (message._id) {
+        messageFactory.removeMessage(message._id)
+        .then(function(Response) {
+          $log.log(controllerName, 'Response', Response);
+          if (codeManagerFactory.isSuccess(Response.returnCode)) {
+            $log.info(controllerName, 'removeMessage success');
+          } else {
+            $log.error(controllerName, 'removeMessage error');
+          }
+        }, function(error) {
+          // $log.log(controllerName, 'error', error);
+        });
+      } else {
+
+      }
+    } else {
+
+    }
+  };
+
+  $scope.removeAllMessages = function() {
+    $log.log(controllerName, 'removeAllMessages');
+    messageFactory.removeAllMessages()
+    .then(function(Response) {
+      $log.log(controllerName, 'Response', Response);
+      if (codeManagerFactory.isSuccess(Response.returnCode)) {
+        $log.info(controllerName, 'removeAllMessages success');
+      } else {
+        $log.error(controllerName, 'removeAllMessages error');
+      }
+    }, function(error) {
+      // $log.log(controllerName, 'error', error);
+    });
   };
 
   $scope.editMessage = function(message) {
@@ -56,24 +100,6 @@ function MainCtrl($scope, $log, $timeout) {
       message() {
         return Messages.findOne(message._id);
       }
-    });
-  };
-
-  $scope.removeMessage = function(message) {
-    $log.log(controllerName, 'removeMessage', message);
-    Messages.remove({_id: message._id}, function(error) {
-      if (!error) {
-        $log.log(controllerName, 'removeMessage success');
-      } else {
-        $log.log(controllerName, 'removeMessage error', error);
-      }
-    });
-  };
-
-  $scope.removeAllMessages = function() {
-    $log.log(controllerName, 'removeAllMessages');
-    Messages.remove({}, function(error) {
-      $log.log(controllerName, 'removeAllMessages', error);
     });
   };
 
