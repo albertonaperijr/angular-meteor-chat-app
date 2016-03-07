@@ -9,15 +9,15 @@ MainCtrl.$inject = ['$scope', '$log', '$timeout', 'codeManagerFactory', 'message
 function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
 
   var controllerName = 'MainCtrl';
-  $log.log(controllerName, Messages);
+  $log.log(controllerName);
 
   /**
   * Angular Meteor Way - Latest Code
   **/
 
+  $scope.subscribe('messages');
   $scope.helpers({
     messages: function() {
-      // return Messages.find({});
       return Messages.find().fetch().reverse();
     }
   });
@@ -109,24 +109,5 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
       $log.log(controllerName, 'Messages', $scope.messages);
     });
   };
-
-  /**
-  * This is for auto bind - Angular way
-  **/
-
-  // $scope.messages = $meteor.collection(Messages);
-  //
-  // $scope.sendMessage = function() {
-  //   $scope.messages.push($scope.message);
-  //   $scope.clear();
-  // };
-  //
-  // $scope.editMessage = function(message) {
-  //   $scope.message = message;
-  // };
-  //
-  // $scope.removeMessage = function(message) {
-  //   $scope.messages.splice($scope.messages.indexOf(message), 1);
-  // };
 
 };

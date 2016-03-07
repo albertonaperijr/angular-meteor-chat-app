@@ -1,0 +1,56 @@
+<div>
+  <br />
+  <a ui-sref="home">Home</a>
+  <a ui-sref="messages">Messages</a>
+  <a ui-sref="login" ng-if="!$root.isState('register')">Login</a>
+  <a ui-sref="register" ng-if="!$root.isState('login')">Register</a>
+  <br />
+  <br />
+  <b>Login</b>
+  <br />
+  <br />
+  <div ng-if="$root.isState('login')">
+    <form name="loginForm" novalidate>
+      <legend>Register</legend>
+
+      <p>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="you@domain.tld" ng-model="user.email" />
+      </p>
+
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password" />
+      </p>
+
+      <button ng-click="login()">Login</button>
+    </form>
+  </div>
+
+  <div ng-if="$root.isState('register')">
+    <form name="registerForm" novalidate>
+      <legend>Register</legend>
+
+      <p>
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" placeholder="you@domain.tld" ng-model="user.email" />
+      </p>
+
+      <p>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" ng-model="user.password" />
+      </p>
+
+      <p>
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" ng-model="confirmPassword" />
+      </p>
+
+      <button ng-click="register()">Register</button>
+    </form>
+  </div>
+  <br />
+  <div>
+    users : {{users}}
+  </div>
+</div>

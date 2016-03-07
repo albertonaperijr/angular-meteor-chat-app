@@ -8,10 +8,10 @@ MessagesCtrl.$inject = ['$scope', '$log', '$meteor'];
 
 function MessagesCtrl($scope, $log, $meteor) {
 
-  $log.log('MessagesCtrl');
+  var controllerName = 'MessagesCtrl';
+  $log.log(controllerName);
 
-  // $scope.messages = $meteor.collection(Messages);
-
+  $scope.subscribe('messages');
   $scope.helpers({
     messages: function() {
       return Messages.find().fetch().reverse();

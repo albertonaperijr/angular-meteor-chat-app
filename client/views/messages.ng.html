@@ -1,6 +1,9 @@
 <div>
   <br />
   <a ui-sref="home">Home</a>
+  <a ui-sref="login" ng-if="!$root.isUserLoggedin()">Login</a>
+  <a ui-sref="register" ng-if="!$root.isUserLoggedin()">Register</a>
+  <p ui-sref="login" ng-if="$root.isUserLoggedin()">Current user : {{$root.userDetails().emails[0].address}}</p>
   <br />
   <br />
   <b>Messages</b>

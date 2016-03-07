@@ -16,6 +16,16 @@ function config($stateProvider, $locationProvider, $urlRouterProvider) {
     templateUrl: 'client/views/main.ng.html',
     controller: 'MainCtrl'
   })
+  .state('login', {
+    url: '/login',
+    templateUrl: 'client/views/login.ng.html',
+    controller: 'LoginCtrl'
+  })
+  .state('register', {
+    url: '/register',
+    templateUrl: 'client/views/login.ng.html',
+    controller: 'LoginCtrl'
+  })
   .state('messages', {
     url: '/messages',
     templateUrl: 'client/views/messages.ng.html',

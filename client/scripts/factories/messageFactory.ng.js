@@ -50,6 +50,14 @@ function messageFactory($q, $timeout, $log) {
   // Data retrieval section
   //----------------------------------------------------------------------
 
+  this.getAllMessages = function() {
+    deferred = $q.defer();
+    Meteor.call('removeAllMessages', function(error, response) {
+      deferred.resolve(response);
+    });
+    return deferred.promise;
+  };
+
   return this;
 
 }
