@@ -1,11 +1,5 @@
 <div>
   <br />
-  <a ui-sref="messages">Messages</a>
-  <a ui-sref="login" ng-if="!$root.isUserLoggedin()">Login</a>
-  <a ui-sref="register" ng-if="!$root.isUserLoggedin()">Register</a>
-  <a href ng-click="$root.logout()" ng-if="$root.isUserLoggedin()">Logout</a>
-  <p ui-sref="login" ng-if="$root.isUserLoggedin()">Current user : {{$root.userDetails().emails[0].address}}</p>
-  <br />
   <br />
   <b>Sample chat app</b>
   <br />
@@ -24,8 +18,8 @@
     <br />
     Message : {{message.message}}
     <br />
-    <button ng-click="editMessage(message)" ng-if="$root.isUserLoggedin() === message.owner">Edit</button>
-    <button ng-click="removeMessage(message)" ng-if="$root.isUserLoggedin() === message.owner">Delete</button>
+    <button ng-click="editMessage(message)" ng-if="$root.currentUser._id === message.owner">Edit</button>
+    <button ng-click="removeMessage(message)" ng-if="$root.currentUser._id === message.owner">Delete</button>
     <br />
     <br />
   </div>

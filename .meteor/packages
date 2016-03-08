@@ -21,3 +21,5 @@ accounts-base
 accounts-password
 service-configuration
 accounts-google
+mizzao:user-status
+accounts-facebook

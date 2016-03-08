@@ -17,13 +17,6 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
     $state.go('home');
   }
 
-  $scope.subscribe('users');
-  $scope.helpers({
-    users: function() {
-      return Meteor.users.find({});
-    }
-  });
-
   $scope.login = function() {
     if (!$scope.loginClicked) {
       $scope.loginClicked = true;
@@ -76,6 +69,25 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
         });
       }
     }
+  };
+
+  $scope.loginWith = function(oauthProvider) {
+    // if (!$scope.loginWithClicked) {
+    //   $scope.loginWithClicked = true;
+    $log.log(controllerName, 'loginWith', oauthProvider);
+    loginFactory.loginWithService(oauthProvider)
+    .then(function(error) {
+      if (!error) {
+        $log.info(controllerName, 'Success in logging in', Meteor.user(), Meteor.userId());
+        $state.go('home');
+      } else {
+        $log.error(controllerName, 'Error in logging in', error);
+      }
+      $scope.loginWithClicked = false;
+    }, function(error) {
+      $scope.loginWithClicked = false;
+    });
+    // }
   };
 
 };

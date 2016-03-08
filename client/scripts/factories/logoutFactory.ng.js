@@ -18,6 +18,14 @@ function logoutFactory($q, $timeout, $log) {
     return deferred.promise;
   };
 
+  this.logoutOtherClients = function() {
+    deferred = $q.defer();
+    Meteor.logoutOtherClients(function(error) {
+      deferred.resolve(error);
+    });
+    return deferred.promise;
+  };
+
   return this;
 
 }

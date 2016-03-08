@@ -2,6 +2,7 @@
 
 angular.module('angularMeteor', [
   'angular-meteor',
+  // 'accounts.ui',
   'ui.router'
 ]);
 

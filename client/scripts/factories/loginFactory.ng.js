@@ -26,6 +26,30 @@ function loginFactory($q, $timeout, $log) {
     return deferred.promise;
   };
 
+  this.loginWithService = function(oauthProvider) {
+    deferred = $q.defer();
+    switch (oauthProvider) {
+      case 'facebook':
+      Meteor.loginWithFacebook({}, function(error) {
+        deferred.resolve(error);
+      });
+      break;
+      case 'twitter':
+      Meteor.loginWithTwitter({}, function(error) {
+        deferred.resolve(error);
+      });
+      break;
+      case 'google':
+      Meteor.loginWithGoogle({}, function(error) {
+        deferred.resolve(error);
+      });
+      break;
+      default:
+      deferred.resolve('Null oauthProvider');
+    }
+    return deferred.promise;
+  };
+
   return this;
 
 }

@@ -4,8 +4,39 @@
 </head>
 <body>
 
-  <h3>Simple chat app by Alberto Naperi Jr.</h3>
+  <!-- <h3>Simple chat app by Alberto Naperi Jr.</h3> -->
+
+  <br />
+  <a ui-sref="home" ng-if="!$root.isState('home')">Home</a>
+  <a ui-sref="messages" ng-if="!$root.isState('messages')">Messages</a>
+  <a ui-sref="login" ng-if="!$root.currentUser && !$root.isState('login')">Login</a>
+  <a ui-sref="register" ng-if="!$root.currentUser && !$root.isState('register')">Register</a>
+  <a href ng-click="$root.logout()" ng-if="$root.currentUser">Logout</a>
+  <a href ng-click="$root.logoutOtherClients()" ng-if="$root.onlineUsers.length > 0 && !$root.currentUser">Logout All Clients</a>
+  <br />
+  <p ng-if="$root.currentUser">
+    Current user : {{$root.currentUser.emails[0].address}}
+  </p>
+  <p>loggingIn : {{$root.loggingIn}}</p>
+  {{$root.currentUser}}
 
   <ui-view></ui-view>
+
+  <br />
+  <br />
+  Online users : {{$root.onlineUsers.length}}
+  <br />
+  <div ng-repeat="user in $root.onlineUsers">
+    {{$index + 1}}. {{user.emails[0].address}}
+  </div>
+  <br />
+  <br />
+  All users : {{$root.users.length}}
+  <br />
+  <div ng-repeat="user in $root.users">
+    <p>{{$index + 1}}. {{user}}</p>
+    <br />
+  </div>
+  <br />
 
 </body>
