@@ -19,13 +19,23 @@ Meteor.methods({
 
     future = new Future();
 
-    if (!message) {
-      // throw new Meteor.Error('Null message');
+    if (!Meteor.userId()) {
+      console.error(MethodName, 'Null userId |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (!message) {
       console.error(MethodName, 'Null message |', CodeUtil.INVALID_PARAMETER);
       return future.return({
         returnCode: CodeUtil.INVALID_PARAMETER
       });
+    } else if (message._id) {
+      console.error(MethodName, 'Not null _id |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
     } else {
+      message.owner = Meteor.userId();
       Messages.insert(message, function(error, result) {
         if (error) {
           console.error(MethodName, 'Error creating message |', CodeUtil.CREATE_MESSAGE_ERROR);
@@ -54,10 +64,25 @@ Meteor.methods({
 
     future = new Future();
 
-    if (!message) {
+    if (!Meteor.userId()) {
+      console.error(MethodName, 'Null userId |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (!message) {
       console.error(MethodName, 'Null message |', CodeUtil.INVALID_PARAMETER);
       return future.return({
         returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (!message._id) {
+      console.error(MethodName, 'Null _id |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (message.owner !== Meteor.userId()) {
+      console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
+      return future.return({
+        returnCode: CodeUtil.UNAUTHORIZED_ACCESS
       });
     } else {
       Messages.update(message._id, message, function(error, result) {
@@ -82,26 +107,41 @@ Meteor.methods({
   /**
   * Remove Message
   **/
-  removeMessage: function(messageId) {
+  removeMessage: function(message) {
     MethodName = 'RemoveMessage |';
-    console.log(MethodName, messageId);
+    console.log(MethodName, message);
 
     future = new Future();
 
-    if (!messageId) {
-      console.error(MethodName, 'Null messageId |', CodeUtil.INVALID_PARAMETER);
+    if (!Meteor.userId()) {
+      console.error(MethodName, 'Null userId |', CodeUtil.INVALID_PARAMETER);
       return future.return({
         returnCode: CodeUtil.INVALID_PARAMETER
       });
+    } else if (!message) {
+      console.error(MethodName, 'Null message |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (!message._id) {
+      console.error(MethodName, 'Null _id |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (message.owner !== Meteor.userId()) {
+      console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
+      return future.return({
+        returnCode: CodeUtil.UNAUTHORIZED_ACCESS
+      });
     } else {
-      Messages.remove({_id: messageId}, function(error) {
+      Messages.remove({_id: message._id}, function(error) {
         if (error) {
-          console.error(MethodName, 'Error deleting messagee |', messageId, '|', CodeUtil.DELETE_MESSAGE_ERROR);
+          console.error(MethodName, 'Error deleting messagee |', message._id, '|', CodeUtil.DELETE_MESSAGE_ERROR);
           return future.return({
             returnCode: CodeUtil.DELETE_MESSAGE_ERROR
           });
         } else {
-          console.info(MethodName, 'Success deleting message |', messageId, '|', CodeUtil.DELETE_MESSAGE_SUCCESS);
+          console.info(MethodName, 'Success deleting message |', message._id, '|', CodeUtil.DELETE_MESSAGE_SUCCESS);
           return future.return({
             returnCode: CodeUtil.DELETE_MESSAGE_SUCCESS
           });

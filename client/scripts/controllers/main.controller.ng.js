@@ -60,7 +60,7 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
     $log.log(controllerName, 'removeMessage', message);
     if (message) {
       if (message._id) {
-        messageFactory.removeMessage(message._id)
+        messageFactory.removeMessage(message)
         .then(function(Response) {
           $log.log(controllerName, 'Response', Response);
           if (codeManagerFactory.isSuccess(Response.returnCode)) {

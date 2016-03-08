@@ -30,9 +30,9 @@ function messageFactory($q, $timeout, $log) {
     return deferred.promise;
   };
 
-  this.removeMessage = function(messageId) {
+  this.removeMessage = function(message) {
     deferred = $q.defer();
-    Meteor.call('removeMessage', messageId, function(error, response) {
+    Meteor.call('removeMessage', message, function(error, response) {
       deferred.resolve(response);
     });
     return deferred.promise;

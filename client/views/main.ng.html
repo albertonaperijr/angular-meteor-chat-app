@@ -24,8 +24,8 @@
     <br />
     Message : {{message.message}}
     <br />
-    <button ng-click="editMessage(message)">Edit</button>
-    <button ng-click="removeMessage(message)">Delete</button>
+    <button ng-click="editMessage(message)" ng-if="$root.isUserLoggedin() === message.owner">Edit</button>
+    <button ng-click="removeMessage(message)" ng-if="$root.isUserLoggedin() === message.owner">Delete</button>
     <br />
     <br />
   </div>

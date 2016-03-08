@@ -2,8 +2,8 @@
   <br />
   <a ui-sref="home">Home</a>
   <a ui-sref="messages">Messages</a>
-  <a ui-sref="login" ng-if="!$root.isState('register')">Login</a>
-  <a ui-sref="register" ng-if="!$root.isState('login')">Register</a>
+  <a ui-sref="login" ng-if="$root.isState('register')">Login</a>
+  <a ui-sref="register" ng-if="$root.isState('login')">Register</a>
   <br />
   <br />
   <b>Login</b>

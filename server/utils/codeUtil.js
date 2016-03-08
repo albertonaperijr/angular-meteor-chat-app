@@ -25,7 +25,8 @@ Meteor.startup(function () {
     DELETE_MESSAGE_ERROR: 20103,
 
     // Generic
-    INVALID_PARAMETER: 30001
+    INVALID_PARAMETER: 30001,
+    UNAUTHORIZED_ACCESS: 30002
   };
 
 
