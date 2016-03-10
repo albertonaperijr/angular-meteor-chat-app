@@ -5,7 +5,6 @@
 *
 **/
 
-var Future = Npm.require('fibers/future'); // Synchronous Method
 var future;
 
 Meteor.methods({
@@ -35,11 +34,12 @@ Meteor.methods({
         returnCode: CodeUtil.INVALID_PARAMETER
       });
     } else {
-      message.owner = Meteor.userId();
+      message.userId = Meteor.userId();
       Messages.insert(message, function(error, result) {
         if (error) {
-          console.error(MethodName, 'Error creating message |', CodeUtil.CREATE_MESSAGE_ERROR);
+          console.error(MethodName, 'Error creating message | error : ', error, '| ', CodeUtil.CREATE_MESSAGE_ERROR);
           return future.return({
+            // error: error,
             returnCode: CodeUtil.CREATE_MESSAGE_ERROR
           });
         } else {
@@ -79,15 +79,15 @@ Meteor.methods({
       return future.return({
         returnCode: CodeUtil.INVALID_PARAMETER
       });
-    } else if (message.owner !== Meteor.userId()) {
+    } else if (message.userId !== Meteor.userId()) {
       console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
       return future.return({
         returnCode: CodeUtil.UNAUTHORIZED_ACCESS
       });
     } else {
-      Messages.update(message._id, message, function(error, result) {
+      Messages.update(message._id, {$set: message}, function(error, result) {
         if (error) {
-          console.error(MethodName, 'Error updating message |', CodeUtil.UPDATE_MESSAGE_ERROR);
+          console.error(MethodName, 'Error updating message | error : ', error, '| ', CodeUtil.UPDATE_MESSAGE_ERROR);
           return future.return({
             returnCode: CodeUtil.UPDATE_MESSAGE_ERROR
           });
@@ -128,7 +128,7 @@ Meteor.methods({
       return future.return({
         returnCode: CodeUtil.INVALID_PARAMETER
       });
-    } else if (message.owner !== Meteor.userId()) {
+    } else if (message.userId !== Meteor.userId()) {
       console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
       return future.return({
         returnCode: CodeUtil.UNAUTHORIZED_ACCESS
@@ -136,12 +136,12 @@ Meteor.methods({
     } else {
       Messages.remove({_id: message._id}, function(error) {
         if (error) {
-          console.error(MethodName, 'Error deleting messagee |', message._id, '|', CodeUtil.DELETE_MESSAGE_ERROR);
+          console.error(MethodName, 'Error deleting messagee | error :', error, '|', CodeUtil.DELETE_MESSAGE_ERROR);
           return future.return({
             returnCode: CodeUtil.DELETE_MESSAGE_ERROR
           });
         } else {
-          console.info(MethodName, 'Success deleting message |', message._id, '|', CodeUtil.DELETE_MESSAGE_SUCCESS);
+          console.info(MethodName, 'Success deleting message |', CodeUtil.DELETE_MESSAGE_SUCCESS);
           return future.return({
             returnCode: CodeUtil.DELETE_MESSAGE_SUCCESS
           });
@@ -157,22 +157,40 @@ Meteor.methods({
   **/
   removeAllMessages: function() {
     MethodName = 'RemoveAllMessages |';
+    console.log(MethodName, Meteor.user());
 
     future = new Future();
 
-    Messages.remove({}, function(error) {
-      if (error) {
-        console.error(MethodName, 'Error deleting all messages |', CodeUtil.DELETE_MESSAGE_ERROR);
-        return future.return({
-          returnCode: CodeUtil.DELETE_MESSAGE_ERROR
-        });
-      } else {
-        console.info(MethodName, 'Success deleting all messages |', CodeUtil.DELETE_MESSAGE_SUCCESS);
-        return future.return({
-          returnCode: CodeUtil.DELETE_MESSAGE_SUCCESS
-        });
-      }
-    });
+    if (!Meteor.userId()) {
+      console.error(MethodName, 'Null userId |', CodeUtil.INVALID_PARAMETER);
+      return future.return({
+        returnCode: CodeUtil.INVALID_PARAMETER
+      });
+    } else if (!Meteor.user().roles) {
+      console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
+      return future.return({
+        returnCode: CodeUtil.UNAUTHORIZED_ACCESS
+      });
+    } else if (Meteor.user().roles.indexOf('admin') < 0) {
+      console.error(MethodName, 'Unauthorized access |', CodeUtil.UNAUTHORIZED_ACCESS);
+      return future.return({
+        returnCode: CodeUtil.UNAUTHORIZED_ACCESS
+      });
+    } else {
+      Messages.remove({}, function(error) {
+        if (error) {
+          console.error(MethodName, 'Error deleting all messages |', CodeUtil.DELETE_MESSAGE_ERROR);
+          return future.return({
+            returnCode: CodeUtil.DELETE_MESSAGE_ERROR
+          });
+        } else {
+          console.info(MethodName, 'Success deleting all messages |', CodeUtil.DELETE_MESSAGE_SUCCESS);
+          return future.return({
+            returnCode: CodeUtil.DELETE_MESSAGE_SUCCESS
+          });
+        }
+      });
+    }
 
     return future.wait();
   }

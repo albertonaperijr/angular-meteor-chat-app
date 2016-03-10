@@ -10,7 +10,12 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
 
   var controllerName = 'LoginCtrl';
   $log.log(controllerName, 'Logged User', Meteor.userId());
-  $scope.user = {};
+  $scope.user = {
+    username: null,
+    profile: {name: null}
+  };
+
+  DocHead.setTitle('Simple chat app by Alberto Naperi Jr.');
 
   if (Meteor.userId()) {
     $log.log(controllerName, 'User logged in');
@@ -36,6 +41,8 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
             $log.info(controllerName, 'Success in logging in', Meteor.user(), Meteor.userId(), Meteor.users);
             $state.go('home');
           } else {
+            $log.error(controllerName, 'Error in logging in | reason :', error.reason);
+            $log.error(controllerName, 'Error in logging in | error :', error.error);
             $log.error(controllerName, 'Error in logging in', error);
           }
           $scope.loginClicked = false;
@@ -51,8 +58,9 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
   $scope.register = function() {
     if (!$scope.registerClicked) {
       $scope.registerClicked = true;
+      // $scope.user.username = $scope.user.profile.name.replace(/\s+/g, '_').toLowerCase();
+      // $scope.user.username = $scope.user.profile.name.split(' ').length === 1 ? $scope.user.profile.name.toLowerCase() : $scope.user.profile.name.split(' ')[0].toLowerCase() + '_' + $scope.user.profile.name.split(' ')[1].substring(0, 1).toLowerCase();
       $log.log(controllerName, 'Register', $scope.user);
-
       if (!$scope.user.email || !$scope.user.password) {
         $log.log(controllerName, 'Register : Invalid Parameter');
         $scope.registerClicked = false;
@@ -63,6 +71,8 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
             $log.info(controllerName, 'Success in creating account');
             $scope.login();
           } else {
+            $log.error(controllerName, 'Error in creating account | reason :', error.reason);
+            $log.error(controllerName, 'Error in creating account | error :', error.error);
             $log.error(controllerName, 'Error in creating account', error);
             $scope.registerClicked = false;
           }

@@ -23,3 +23,6 @@ service-configuration
 accounts-google
 mizzao:user-status
 accounts-facebook
+accounts-twitter
+kadira:dochead
+aldeed:collection2

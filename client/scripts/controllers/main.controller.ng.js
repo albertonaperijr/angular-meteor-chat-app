@@ -11,6 +11,8 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
   var controllerName = 'MainCtrl';
   $log.log(controllerName);
 
+  DocHead.setTitle('Simple chat app by Alberto Naperi Jr.');
+
   /**
   * Angular Meteor Way - Latest Code
   **/
@@ -34,8 +36,6 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
           } else {
             // error
           }
-        }, function(error) {
-          // $log.log(controllerName, 'error', error);
         });
       } else {
         $log.log(controllerName, 'sendMessage update', $scope.message);
@@ -47,8 +47,6 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
           } else {
             // error
           }
-        }, function(error) {
-          // $log.log(controllerName, 'error', error);
         });
       }
     } else {
@@ -68,8 +66,6 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
           } else {
             $log.error(controllerName, 'removeMessage error');
           }
-        }, function(error) {
-          // $log.log(controllerName, 'error', error);
         });
       } else {
 
@@ -89,8 +85,6 @@ function MainCtrl($scope, $log, $timeout, codeManagerFactory, messageFactory) {
       } else {
         $log.error(controllerName, 'removeAllMessages error');
       }
-    }, function(error) {
-      // $log.log(controllerName, 'error', error);
     });
   };
 

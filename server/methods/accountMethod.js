@@ -5,7 +5,6 @@
 *
 **/
 
-var Future = Npm.require('fibers/future'); // Synchronous Method
 var future;
 
 Meteor.methods({

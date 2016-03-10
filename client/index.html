@@ -13,10 +13,13 @@
   <a ui-sref="register" ng-if="!$root.currentUser && !$root.isState('register')">Register</a>
   <a href ng-click="$root.logout()" ng-if="$root.currentUser">Logout</a>
   <a href ng-click="$root.logoutOtherClients()" ng-if="$root.onlineUsers.length > 0 && !$root.currentUser">Logout All Clients</a>
+  <login-buttons></login-buttons>
   <br />
-  <p ng-if="$root.currentUser">
-    Current user : {{$root.currentUser.emails[0].address}}
-  </p>
+  <div ng-if="$root.currentUser">
+    Current user :
+    <p>Name : {{$root.currentUser.profile.name}}</p>
+    <p>Email : {{$root.currentUser.emails[0].address}}</p>
+  </div>
   <p>loggingIn : {{$root.loggingIn}}</p>
   {{$root.currentUser}}
 

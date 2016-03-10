@@ -2,25 +2,34 @@
 
 Accounts.validateNewUser(function(user) {
 
-  console.log('validateNewUser user :', user);
+  console.log('ValidateNewUser :', user);
+  // user.roles = [
+  //   'admin'
+  // ];
 
   if (user.services.facebook) {
-    user.emails = [{
-      address: user.services.facebook.email,
-      verified: true
-    }];
+    if (user.services.facebook.email) {
+      user.emails = [{
+        address: user.services.facebook.email,
+        verified: true
+      }];
+    }
     return true;
   } else if (user.services.twitter) {
-    user.emails = [{
-      address: user.services.twitter.email,
-      verified: true
-    }];
+    if (user.services.twitter.email) {
+      user.emails = [{
+        address: user.services.twitter.email,
+        verified: true
+      }];
+    }
     return true;
   } else if (user.services.google) {
-    user.emails = [{
-      address: user.services.google.email,
-      verified: true
-    }];
+    if (user.services.google.email) {
+      user.emails = [{
+        address: user.services.google.email,
+        verified: true
+      }];
+    }
     return true;
   } else if (user.services.password) {
     return true;

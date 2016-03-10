@@ -10,6 +10,8 @@ function MessagesCtrl($scope, $log, $meteor) {
 
   var controllerName = 'MessagesCtrl';
   $log.log(controllerName);
+  
+  DocHead.setTitle('Show all messages');
 
   $scope.subscribe('messages');
   $scope.helpers({
