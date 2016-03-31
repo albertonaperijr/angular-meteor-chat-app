@@ -1,0 +1,51 @@
+<div layout="column">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings" ng-if>
+                <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+            </md-button>
+            <md-button aria-label="Go Back" ng-if>
+                Go Back
+            </md-button>
+            <h2 ui-sref="home">
+                <span>Bebertz's Simple Chat App</span>
+            </h2>
+            <span flex></span>
+            <small style="margin-right: 15px;" ng-if="$root.currentUser">{{$root.currentUser.profile.name}}</small>
+            <md-button ui-sref="home" ng-if="!$root.isState('home')">
+                Home
+            </md-button>
+            <md-button ui-sref="messages" ng-if="!$root.isState('messages')">
+                Messages
+            </md-button>
+            <md-button ui-sref="material" ng-if="!$root.isState('material')">
+                Material
+            </md-button>
+            <md-button ui-sref="login" ng-if="!$root.currentUser && !$root.isState('login')">
+                Login
+            </md-button>
+            <md-button href ng-click="$root.logout()" ng-if="$root.currentUser">
+                Logout
+            </md-button>
+            <md-button href ng-click="$root.logoutOtherClients()" ng-if="$root.onlineUsers.length > 0 && !$root.currentUser">
+                Logout All Clients
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <ui-view></ui-view>
+
+    <md-content layout-padding>
+        <br />
+        Online users : {{$root.onlineUsers.length}}
+        <br />
+        <div ng-repeat="user in $root.onlineUsers">
+            {{$index + 1}}. {{user.emails[0].address}}
+        </div>
+        <br />
+        <br />
+        All users : {{$root.users.length}}
+        <br />
+        <p ng-repeat="User in $root.users">{{$index + 1}}. {{User}}</p>
+    </md-content>
+</div>
