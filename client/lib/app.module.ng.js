@@ -3,6 +3,7 @@
 angular.module('angularMeteor', [
   'angular-meteor',
   // 'accounts.ui',
+  'ngMaterial',
   'ui.router'
 ]);
 

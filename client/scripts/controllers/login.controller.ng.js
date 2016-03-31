@@ -91,7 +91,9 @@ function LoginCtrl($rootScope, $scope, $state, $log, accountFactory, codeManager
         $log.info(controllerName, 'Success in logging in', Meteor.user(), Meteor.userId());
         $state.go('home');
       } else {
-        $log.error(controllerName, 'Error in logging in', error);
+        $log.error(controllerName, 'Error in logging with', oauthProvider, 'in | reason :', error.reason);
+        $log.error(controllerName, 'Error in logging with', oauthProvider, 'in | error :', error.error);
+        $log.error(controllerName, 'Error in logging with', oauthProvider, 'in', error);
       }
       $scope.loginWithClicked = false;
     }, function(error) {

@@ -16,6 +16,11 @@ function config($stateProvider, $locationProvider, $urlRouterProvider) {
     templateUrl: 'client/views/main.ng.html',
     controller: 'MainCtrl'
   })
+  .state('material', {
+    url: '/material',
+    templateUrl: 'client/views/material.ng.html',
+    controller: 'MaterialCtrl'
+  })
   .state('login', {
     url: '/login',
     templateUrl: 'client/views/login.ng.html',
