@@ -74,8 +74,8 @@ Meteor.methods({
             return future.return({
                 returnCode: CodeUtil.INVALID_PARAMETER
             });
-        } else if (!message._id) {
-            console.error(MethodName, 'Null _id |', Meteor.userId(), ' |', CodeUtil.INVALID_PARAMETER);
+        } else if (!message._id || !message.message) {
+            console.error(MethodName, 'Null _id or null message |', Meteor.userId(), ' |', CodeUtil.INVALID_PARAMETER);
             return future.return({
                 returnCode: CodeUtil.INVALID_PARAMETER
             });

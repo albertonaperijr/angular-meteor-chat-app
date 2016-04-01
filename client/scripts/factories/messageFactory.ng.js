@@ -14,36 +14,52 @@ function messageFactory($q, $timeout, $log) {
   // Create update delete section
   //----------------------------------------------------------------------
 
+  // this.createMessage = function(message) {
+  //   deferred = $q.defer();
+  //   Meteor.call('createMessage', message, function(error, response) {
+  //     deferred.resolve(response);
+  //   });
+  //   return deferred.promise;
+  // };
+
+  // this.updateMessage = function(message) {
+  //   deferred = $q.defer();
+  //   Meteor.call('updateMessage', message, function(error, response) {
+  //     deferred.resolve(response);
+  //   });
+  //   return deferred.promise;
+  // };
+
+  // this.removeMessage = function(message) {
+  //   deferred = $q.defer();
+  //   Meteor.call('removeMessage', message, function(error, response) {
+  //     deferred.resolve(response);
+  //   });
+  //   return deferred.promise;
+  // };
+
+  // this.removeAllMessages = function() {
+  //   deferred = $q.defer();
+  //   Meteor.call('removeAllMessages', function(error, response) {
+  //     deferred.resolve(response);
+  //   });
+  //   return deferred.promise;
+  // };
+
   this.createMessage = function(message) {
-    deferred = $q.defer();
-    Meteor.call('createMessage', message, function(error, response) {
-      deferred.resolve(response);
-    });
-    return deferred.promise;
+    return Meteor.callPromise('createMessage', message);
   };
 
   this.updateMessage = function(message) {
-    deferred = $q.defer();
-    Meteor.call('updateMessage', message, function(error, response) {
-      deferred.resolve(response);
-    });
-    return deferred.promise;
+    return Meteor.callPromise('updateMessage', message);
   };
 
   this.removeMessage = function(message) {
-    deferred = $q.defer();
-    Meteor.call('removeMessage', message, function(error, response) {
-      deferred.resolve(response);
-    });
-    return deferred.promise;
+    return Meteor.callPromise('removeMessage', message);
   };
 
   this.removeAllMessages = function() {
-    deferred = $q.defer();
-    Meteor.call('removeAllMessages', function(error, response) {
-      deferred.resolve(response);
-    });
-    return deferred.promise;
+    return Meteor.callPromise('removeAllMessages');
   };
 
   //----------------------------------------------------------------------

@@ -25,8 +25,8 @@
                 <h3>{{getUser(Message.userId).profile.name}}</h3>
                 <p>{{Message.message}}</p>
             </div>
-            <!-- <md-button class="md-primary" ng-click="editMessage(Message)" ng-if="$root.currentUser._id === Message.userId">Edit</md-button> -->
-            <md-button class="md-secondary" ng-click="removeMessage(Message)" ng-if="$root.currentUser._id === Message.userId">Delete</md-button>
+            <md-button class="md-primary" ng-click="editMessage(Message)" ng-if="$root.currentUser._id === Message.userId">Edit</md-button>
+            <!-- <md-button class="md-secondary" ng-click="removeMessage(Message)" ng-if="$root.currentUser._id === Message.userId">Delete</md-button> -->
         </md-list-item>
     </md-list>
 </md-content>

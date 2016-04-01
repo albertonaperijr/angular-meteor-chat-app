@@ -6,8 +6,8 @@
 **/
 
 SMTP = {
-  username: 'bebertz93@gmail.com', // eg: email@gmail.com
-  password: 'B3b3rtz93.203040ph', // eg: mypassword
+  username: 'dumyiih@gmail.com', // eg: email@gmail.com
+  password: 'dumyiih.com', // eg: mypassword
   server:   'smtp.gmail.com', // eg: smtp.gmail.com
   port: 465
 }

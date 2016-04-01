@@ -1,11 +1,10 @@
 /**
 *
-* Email Util
-* Create Update Delete
+* Email Methods
+*
 *
 **/
 
-var Future = Npm.require('fibers/future'); // Synchronous Method
 var future;
 
 Meteor.methods({
@@ -26,7 +25,7 @@ Meteor.methods({
       // });
     } else {
       Email.send({
-        from: "bebertz93@gmail.com",
+        from: "dumyiih@gmail.com",
         to: "albertonaperijr@gmail.com",
         subject: "Meteor Can Send Emails via Gmail",
         text: "Its pretty easy to send emails via gmail."
